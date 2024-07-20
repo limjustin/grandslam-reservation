@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>예약 서비스</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .time-slot {
+            margin: 5px;
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ffffff;
+            border-radius: 5px;
+            color: #fff;
+            background-color: #4b0d0d;
+            cursor: pointer;
+            flex: 1 0 21%; /* 4 buttons per row */
+            box-sizing: border-box;
+        }
+        .time-slot.disabled {
+            background-color: #ada7a7;
+            border-color: #ffffff;
+            cursor: not-allowed;
+        }
+        .day-column {
+            margin-bottom: 20px;
+        }
+
+        /* 기본 리셋 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 전체 화면 스타일 */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* 네비게이션 바 스타일 */
+        .navbar {
+            background-color: #800020; /* 버건디 색상 */
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 10px 15px; /* 여백 줄이기 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-radius: 0 0 10px 10px; /* 둥근 하단 모서리 */
+            height: 50px; /* 네비게이션 바 높이 줄이기 */
+        }
+
+        /* 뒤로가기 버튼 스타일 */
+        .back-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px; /* 글씨 크기 줄이기 */
+            font-family: 'Roboto', sans-serif;
+            cursor: pointer;
+            margin-right: 15px; /* 오른쪽 여백 줄이기 */
+            transition: color 0.3s;
+        }
+
+        .back-button:hover {
+            color: #dcdcdc;
+        }
+
+        /* 메인 콘텐츠 영역 스타일 */
+        .container {
+            margin-top: 60px; /* 네비게이션 바의 높이보다 약간 큰 여백 추가 */
+            text-align: center;
+            flex: 1;
+            padding: 20px; /* 페이지 내용의 좌우 여백 추가 */
+        }
+
+        /* 메인 버튼 영역 스타일 */
+        main {
+            margin: 20px 0;
+        }
+
+        /* 버튼 공통 스타일 */
+        .button {
+            display: inline-block;
+            width: 200px; /* 버튼 너비 조정 */
+            padding: 12px 18px; /* 버튼 내 여백 조정 */
+            border: none;
+            border-radius: 25px; /* 둥근 모서리 */
+            color: white;
+            font-size: 16px; /* 글씨 크기 조정 */
+            font-weight: bold;
+            cursor: pointer;
+            margin: 10px;
+            text-decoration: none;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* 버튼 그림자 */
+        }
+
+        /* 예약하기 버튼 스타일 */
+        .reserve-button {
+            background-color: #800020; /* 버건디 색상 */
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .reserve-button:hover {
+            transform: scale(1.05);
+            background-color: #70001a; /* 약간 더 어두운 버건디 */
+        }
+
+        /* 예약 조회 버튼 스타일 */
+        .view-button {
+            background-color: #b03a2e; /* 더 밝은 버건디 색상 */
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .view-button:hover {
+            transform: scale(1.05);
+            background-color: #a93226; /* 약간 더 어두운 밝은 버건디 */
+        }
+
+        /* 버튼 텍스트 스타일 */
+        .button span {
+            display: block;
+            font-family: 'Roboto', sans-serif;
+        }
+
+    </style>
+</head>
+<body>
+<div class="container">
+    <nav class="navbar">
+        <button class="back-button" onclick="goBack()">&larr; Back</button>
+        <h3>예약하기</h3>
+    </nav>
+    <h3 class="mt-5">예약 서비스</h3>
+    <div class="row">
+        <div class="col-md-4 day-column">
+            <h3>7월 22일 (월)</h3>
+            <div class="d-flex flex-wrap">
+                <div th:each="slot : ${slots[0]}" th:classappend="${slot.booked} ? ' disabled' : ''" th:data-date="${slot.date}" th:data-time="${slot.time}" th:text="${slot.time}" class="time-slot" th:onclick="!${slot.booked} ? 'selectSlot(this)' : ''"></div>
+            </div>
+        </div>
+        <div class="col-md-4 day-column">
+            <h3>7월 23일 (화)</h3>
+            <div class="d-flex flex-wrap">
+                <div th:each="slot : ${slots[1]}" th:classappend="${slot.booked} ? ' disabled' : ''" th:data-date="${slot.date}" th:data-time="${slot.time}" th:text="${slot.time}" class="time-slot" th:onclick="!${slot.booked} ? 'selectSlot(this)' : ''"></div>
+            </div>
+        </div>
+        <div class="col-md-4 day-column">
+            <h3>7월 24일 (수)</h3>
+            <div class="d-flex flex-wrap">
+                <div th:each="slot : ${slots[2]}" th:classappend="${slot.booked} ? ' disabled' : ''" th:data-date="${slot.date}" th:data-time="${slot.time}" th:text="${slot.time}" class="time-slot" th:onclick="!${slot.booked} ? 'selectSlot(this)' : ''"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap JS and dependencies -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<!-- AJAX and event handler -->
+<script>
+    function selectSlot(element) {
+        var date = element.getAttribute('data-date');
+        var time = element.getAttribute('data-time');
+        var url = '/heroes/reservation?date=' + encodeURIComponent(date) + '&time=' + encodeURIComponent(time);
+        window.location.href = url;
+    }
+
+    function goBack() {
+        window.history.back();
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>예약 조회</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+        .card {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">예약 조회</h3>
+                    <form id="lookupForm" method="get" action="/api/v1/details">
+                        <div class="form-group">
+                            <label for="username">사용자 이름</label>
+                            <input type="text" class="form-control" id="username" name="username" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">조회하기</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h3 class="card-title">예약 내역</h3>
+                    <div id="reservationDetails">
+                        <!-- 예약 내역이 여기에 표시됩니다. -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#lookupForm').on('submit', function(event) {
+            event.preventDefault();
+            var username = $('#username').val();
+            $.ajax({
+                url: '/api/v1/details',
+                type: 'get',
+                data: { username: username },
+                success: function(response) {
+                    var reservationDetails = $('#reservationDetails');
+                    reservationDetails.empty();
+                    if (response) {
+                        var card = $('<div class="card"><div class="card-body"><h5 class="card-title">' + response.username + '</h5><p class="card-text">날짜: ' + response.date + '</p><p class="card-text">시간: ' + response.time + '</p></div></div>');
+                        reservationDetails.append(card);
+                    } else {
+                        reservationDetails.append('<div class="alert alert-warning" role="alert">예약 내역이 없습니다.</div>');
+                    }
+                }
+            });
+        });
+    });
+</script>
+</body>
+</html>
