@@ -50,11 +50,13 @@ public class ReservationController {
     // 예약하기 API
     @PostMapping("/api/v1/reservation")
     public String makeReservation(@RequestParam("username") String username, @RequestParam("date") String date, @RequestParam("time") String time, Model model) throws InterruptedException, ExecutionException {
-        CompletableFuture<String> stringCompletableFuture = reservationService.makeReservation(ReservationRequest.SaveDto.builder()
-                .username(username)
-                .date(date)
-                .time(time)
-                .build());
+        CompletableFuture<String> stringCompletableFuture = reservationService.makeReservation(
+                ReservationRequest.SaveDto.builder()
+                        .username(username)
+                        .date(date)
+                        .time(time)
+                        .build()
+        );
         System.out.println("stringCompletableFuture = " + stringCompletableFuture);
         System.out.println("stringCompletableFuture.get() = " + stringCompletableFuture.get());
         model.addAttribute("message", stringCompletableFuture.get());

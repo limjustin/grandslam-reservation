@@ -30,6 +30,7 @@ public class ReservationService {
     @Async
     @Transactional
     public CompletableFuture<String> makeReservation(ReservationRequest.SaveDto saveDto) throws InterruptedException {
+        System.out.println("saveDto = " + saveDto.getUsername());
         return concurrentRequestHandler.handleConcurrency(saveDto);
     }
 
