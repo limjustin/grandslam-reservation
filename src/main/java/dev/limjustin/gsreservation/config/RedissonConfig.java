@@ -20,7 +20,7 @@ public class RedissonConfig {
     @Bean
     public RedissonClient redissonClient(){
         Config config = new Config();
-        config.useClusterServers().addNodeAddress(REDISSON_HOST_PREFIX + host + ":" + port);
+        config.useSingleServer().setAddress(REDISSON_HOST_PREFIX + host + ":" + port);
         return Redisson.create(config);
     }
 }
