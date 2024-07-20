@@ -27,10 +27,9 @@ public class ReservationService {
         return timeSlotRepository.findByDate(date);
     }
 
-    @Async
     @Transactional
     public CompletableFuture<String> makeReservation(ReservationRequest.SaveDto saveDto) throws InterruptedException {
-        System.out.println("saveDto = " + saveDto.getUsername());
+        System.out.println("saveDto = " + saveDto);
         return concurrentRequestHandler.handleConcurrency(saveDto);
     }
 

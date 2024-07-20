@@ -22,7 +22,7 @@
             <label for="time">시간</label>
             <input type="text" class="form-control" id="time" name="time" readonly th:value="${time}">
         </div>
-        <button type="submit" class="btn btn-primary">예약하기</button>
+        <button type="submit" class="btn btn-primary" onclick="submitReservation()">예약하기</button>
     </form>
 </div>
 
@@ -31,29 +31,26 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 <script>
-    $(document).ready(function() {
-        $('#reservationForm').on('submit', function(event) {
-            var formData = {
-                username: $('#username').val(),
-                date: $('#date').val(),
-                time: $('#time').val()
-            };
+    function submitReservation() {
+        var formData = {
+            username: $('#username').val(),
+            date: $('#date').val(),
+            time: $('#time').val()
+        };
 
-            $.ajax({
-                url: '/api/v1/reservation',
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify(formData),
-                success: function(response) {
-                    $('#result').html('<div class="alert alert-success" role="alert">예약이 성공적으로 완료되었습니다.</div>');
-                },
-                error: function(response) {
-                    $('#result').html('<div class="alert alert-danger" role="alert">예약에 실패했습니다. 다시 시도해주세요.</div>');
-                }
-            });
-        }
+        $.ajax({
+            url: '/api/v1/reservation',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function(response) {
+                $('#result').html('<div class="alert alert-success" role="alert">예약이 성공적으로 완료되었습니다.</div>');
+            },
+            error: function(response) {
+                $('#result').html('<div class="alert alert-danger" role="alert">예약에 실패했습니다. 다시 시도해주세요.</div>');
+            }
+        });
     }
-
 </script>
 </body>
 </html>
