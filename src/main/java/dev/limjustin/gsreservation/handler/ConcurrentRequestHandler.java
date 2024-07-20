@@ -27,6 +27,7 @@ public class ConcurrentRequestHandler {
     @Transactional
     public CompletableFuture<String> handleConcurrency(ReservationRequest.SaveDto requestDto) throws InterruptedException {
         try {
+            System.out.println("requestDto in concurrency method = " + requestDto.getUsername());
             Reservation reservation = handleRequest(requestDto);
             String responseString = reservation.getUsername() + "님, 예약이 완료되었습니다.";
             return CompletableFuture.completedFuture(responseString);
@@ -42,6 +43,8 @@ public class ConcurrentRequestHandler {
 
         Reservation savedReservation = null;
 
+        System.out.println("requestDto in handle method = " + requestDto.getUsername());
+
         try {
             if (rlock.tryLock(10, TimeUnit.SECONDS)) {  // 1. 락을 선점합니다.
                 // 2. 예약 내역을 조회합니다.
@@ -53,6 +56,7 @@ public class ConcurrentRequestHandler {
                     throw new InterruptedException();
                 }
 
+                System.out.println(" reservation ok" );
                 // 3. 예약 가능한 상태라면, 예약을 진행합니다. DB에 저장합니다.
                 timeSlot.setBooked();
                 savedReservation = reservationRepository.save(Reservation.builder()
