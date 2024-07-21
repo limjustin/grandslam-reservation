@@ -59,7 +59,6 @@ public class ConcurrentRequestHandler {
                     return savedReservation;
                 }
 
-                System.out.println(" reservation ok" );
                 // 3. 예약 가능한 상태라면, 예약을 진행합니다. DB에 저장합니다.
                 timeSlot.setBooked();
                 savedReservation = reservationRepository.save(Reservation.builder()
