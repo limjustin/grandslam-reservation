@@ -83,6 +83,7 @@ public class ReservationController {
     }
 
     @GetMapping("/healthcheck")
+    @ResponseBody
     public String showHealthcheck() {
         return "Hello world!";
     }
