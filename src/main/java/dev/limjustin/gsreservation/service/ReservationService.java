@@ -8,7 +8,6 @@ import dev.limjustin.gsreservation.repository.ReservationRepository;
 import dev.limjustin.gsreservation.repository.TimeSlotRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,6 +26,7 @@ public class ReservationService {
         return timeSlotRepository.findByDate(date);
     }
 
+    // 여기에 Async 어노테이션 달아서 생긴 문제..
     @Transactional
     public CompletableFuture<String> makeReservation(ReservationRequest.SaveDto saveDto) throws InterruptedException {
         System.out.println("saveDto = " + saveDto);

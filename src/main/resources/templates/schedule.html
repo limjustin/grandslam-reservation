@@ -140,25 +140,27 @@
 <body>
 <div class="container">
     <nav class="navbar">
-        <button class="back-button" onclick="goBack()">&larr; Back</button>
-        <h3>예약하기</h3>
+        <a href="/heroes">
+            <button class="back-button">&larr; Back</button>
+        </a>
+        <h5>예약하기</h5>
     </nav>
-    <h3 class="mt-5">예약 서비스</h3>
+    <h5 class="mt-5">면접 시간 예약하기</h5>
     <div class="row">
         <div class="col-md-4 day-column">
-            <h3>7월 22일 (월)</h3>
+            <h5>7월 22일 (월)</h5>
             <div class="d-flex flex-wrap">
                 <div th:each="slot : ${slots[0]}" th:classappend="${slot.booked} ? ' disabled' : ''" th:data-date="${slot.date}" th:data-time="${slot.time}" th:text="${slot.time}" class="time-slot" th:onclick="!${slot.booked} ? 'selectSlot(this)' : ''"></div>
             </div>
         </div>
         <div class="col-md-4 day-column">
-            <h3>7월 23일 (화)</h3>
+            <h5>7월 23일 (화)</h5>
             <div class="d-flex flex-wrap">
                 <div th:each="slot : ${slots[1]}" th:classappend="${slot.booked} ? ' disabled' : ''" th:data-date="${slot.date}" th:data-time="${slot.time}" th:text="${slot.time}" class="time-slot" th:onclick="!${slot.booked} ? 'selectSlot(this)' : ''"></div>
             </div>
         </div>
         <div class="col-md-4 day-column">
-            <h3>7월 24일 (수)</h3>
+            <h5>7월 24일 (수)</h5>
             <div class="d-flex flex-wrap">
                 <div th:each="slot : ${slots[2]}" th:classappend="${slot.booked} ? ' disabled' : ''" th:data-date="${slot.date}" th:data-time="${slot.time}" th:text="${slot.time}" class="time-slot" th:onclick="!${slot.booked} ? 'selectSlot(this)' : ''"></div>
             </div>

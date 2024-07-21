@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>예약 완료</title>
+    <title>예약 실패</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container">
-    <h5 class="mt-5">예약 완료</h5>
-    <div class="alert alert-success" role="alert">
+    <h5 class="mt-5">예약 실패</h5>
+    <div class="alert alert-danger" role="alert">
         <p th:text="${message}"></p>
     </div>
-    <a href="/heroes/details" class="btn btn-primary">예약 확인하기</a>
+    <a href="/heroes/schedule" class="btn btn-primary">다시 예약하기</a>
 </div>
 
 <!-- Bootstrap JS and dependencies -->

@@ -7,26 +7,67 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
     <style>
         .container {
-            margin-top: 50px;
+            margin-top: 60px;
+            text-align: center;
+            flex: 1;
+            padding: 20px; /* 페이지 내용의 좌우 여백 추가 */
         }
         .card {
             margin-bottom: 20px;
+        }
+
+        /* 네비게이션 바 스타일 */
+        .navbar {
+            background-color: #800020; /* 버건디 색상 */
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 10px 15px; /* 여백 줄이기 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-radius: 0 0 10px 10px; /* 둥근 하단 모서리 */
+            height: 50px; /* 네비게이션 바 높이 줄이기 */
+        }
+
+        /* 뒤로가기 버튼 스타일 */
+        .back-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px; /* 글씨 크기 줄이기 */
+            font-family: 'Roboto', sans-serif;
+            cursor: pointer;
+            margin-right: 15px; /* 오른쪽 여백 줄이기 */
+            transition: color 0.3s;
+        }
+
+        .back-button:hover {
+            color: #dcdcdc;
         }
     </style>
 </head>
 <body>
 <div class="container">
+    <nav class="navbar">
+        <a href="/heroes">
+            <button class="back-button">&larr; Back</button>
+        </a>
+        <h5>예약 조회</h5>
+    </nav>
     <div class="row">
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h3 class="card-title">예약 조회</h3>
+                    <h5 class="card-title">예약 조회</h5>
                     <form id="lookupForm" method="get" action="/api/v1/details">
                         <div class="form-group">
                             <label for="username">사용자 이름</label>
                             <input type="text" class="form-control" id="username" name="username" required>
                         </div>
-                        <button type="submit" class="btn btn-primary">조회하기</button>
+                        <button type="submit" class="btn btn-dark">조회하기</button>
                     </form>
                 </div>
             </div>
@@ -34,7 +75,7 @@
         <div class="col-md-6">
             <div class="card">
                 <div class="card-body">
-                    <h3 class="card-title">예약 내역</h3>
+                    <h5 class="card-title">예약 내역</h5>
                     <div id="reservationDetails">
                         <!-- 예약 내역이 여기에 표시됩니다. -->
                     </div>

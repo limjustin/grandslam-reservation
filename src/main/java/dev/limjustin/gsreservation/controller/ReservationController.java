@@ -57,8 +57,17 @@ public class ReservationController {
                 .build());
         System.out.println("stringCompletableFuture = " + stringCompletableFuture);
         System.out.println("stringCompletableFuture.get() = " + stringCompletableFuture.get());
-        model.addAttribute("message", stringCompletableFuture.get());
-        return "success";
+
+        String status = stringCompletableFuture.get().split("_")[0];
+        String message = stringCompletableFuture.get().split("_")[1];
+
+        if (status.equals("failed")) {
+            model.addAttribute("message", message);
+            return "failed";
+        } else {
+            model.addAttribute("message", message);
+            return "success";
+        }
     }
 
     // 예약 조회하기 API

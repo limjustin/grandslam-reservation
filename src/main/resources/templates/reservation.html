@@ -5,10 +5,57 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>예약 정보 입력</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* 메인 콘텐츠 영역 스타일 */
+        .container {
+            margin-top: 60px; /* 네비게이션 바의 높이보다 약간 큰 여백 추가 */
+            text-align: center;
+            flex: 1;
+            padding: 20px; /* 페이지 내용의 좌우 여백 추가 */
+        }
+
+        /* 네비게이션 바 스타일 */
+        .navbar {
+            background-color: #800020; /* 버건디 색상 */
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 10px 15px; /* 여백 줄이기 */
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            border-radius: 0 0 10px 10px; /* 둥근 하단 모서리 */
+            height: 50px; /* 네비게이션 바 높이 줄이기 */
+        }
+
+        /* 뒤로가기 버튼 스타일 */
+        .back-button {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 18px; /* 글씨 크기 줄이기 */
+            font-family: 'Roboto', sans-serif;
+            cursor: pointer;
+            margin-right: 15px; /* 오른쪽 여백 줄이기 */
+            transition: color 0.3s;
+        }
+
+        .back-button:hover {
+            color: #dcdcdc;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
-    <h1 class="mt-5">예약 정보 입력</h1>
+    <nav class="navbar">
+        <a href="/heroes/schedule">
+            <button class="back-button">&larr; Back</button>
+        </a>
+        <h5>예약하기</h5>
+    </nav>
+    <h4 class="mt-5">예약 정보 입력</h4>
     <form id="reservationForm" method="post" action="/api/v1/reservation">
         <div class="form-group">
             <label for="username">사용자 이름</label>

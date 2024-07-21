@@ -26,14 +26,17 @@ public class ConcurrentRequestHandler {
     @Async
     @Transactional
     public CompletableFuture<String> handleConcurrency(ReservationRequest.SaveDto requestDto) throws InterruptedException {
-        try {
-            System.out.println("requestDto in concurrency method = " + requestDto.getUsername());
-            Reservation reservation = handleRequest(requestDto);
-            String responseString = reservation.getUsername() + "님, 예약이 완료되었습니다.";
-            return CompletableFuture.completedFuture(responseString);
-        } catch (InterruptedException e) {
-            throw new InterruptedException();
+        System.out.println("requestDto in concurrency method = " + requestDto.getUsername());
+        Reservation reservation = handleRequest(requestDto);
+
+        String responseString;
+        if (reservation == null) {
+            responseString = "failed_" + "예약에 실패하였습니다. 다시 예약해주세요.";
+        } else {
+            responseString = "success_" + reservation.getUsername() + "님, 예약이 완료되었습니다.";
         }
+
+        return CompletableFuture.completedFuture(responseString);
     }
 
     private Reservation handleRequest(ReservationRequest.SaveDto requestDto) throws InterruptedException {
@@ -53,7 +56,7 @@ public class ConcurrentRequestHandler {
                 // 2-1. 예약 내역이 존재하면, 시간대를 파악합니다.
                 if (timeSlot.isBooked()) {  // 예약 내역이 이미 존재
                     System.out.println("Reservation Duplicated");
-                    throw new InterruptedException();
+                    return savedReservation;
                 }
 
                 System.out.println(" reservation ok" );
