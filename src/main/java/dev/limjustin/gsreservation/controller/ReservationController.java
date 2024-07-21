@@ -81,4 +81,9 @@ public class ReservationController {
     public Reservation showReservation(@RequestParam("username") String username) {
         return reservationService.showReservation(username);
     }
+
+    @GetMapping("/healthcheck")
+    public String showHealthcheck() {
+        return "Hello world!";
+    }
 }
